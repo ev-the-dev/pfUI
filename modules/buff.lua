@@ -263,30 +263,39 @@ pfUI:RegisterModule("buff", "vanilla:tbc", function ()
   -- config loading
   function pfUI.buff:UpdateConfigBuffButton(buff)
     local fontsize = C.buffs.fontsize == "-1" and C.global.font_size or C.buffs.fontsize
-    local rowcount, relFrame, offsetX, offsetY
+    local rowcount, relFrame, offsetX, offsetY, anchor, growth
     if buff.btype == "HELPFUL" then
       if buff.weapon == 1 and C.buffs.separateweapons == "1" then
         rowcount = floor((buff.gid-1) / tonumber(C.buffs.wepbuffrowsize))
         relFrame = pfUI.buff.wepbuffs
-        offsetX = -(buff.gid-1-rowcount*tonumber(C.buffs.wepbuffrowsize))*(tonumber(C.buffs.size)+2*tonumber(C.buffs.spacing))
+        growth = C.buffs.wepbuffgrowth
+        local multiplier = growth == "LEFT_TO_RIGHT" and 1 or -1
+        offsetX = multiplier * (buff.gid-1-rowcount*tonumber(C.buffs.wepbuffrowsize))*(tonumber(C.buffs.size)+2*tonumber(C.buffs.spacing))
         offsetY = -(rowcount) * ((C.buffs.textinside == "1" and 0 or (fontsize*1.5))+tonumber(C.buffs.size)+2*tonumber(C.buffs.spacing))
+        anchor = growth == "LEFT_TO_RIGHT" and "TOPLEFT" or "TOPRIGHT"
       else
         rowcount = floor((buff.gid-1) / tonumber(C.buffs.buffrowsize))
         relFrame = pfUI.buff.buffs
-        offsetX = -(buff.gid-1-rowcount*tonumber(C.buffs.buffrowsize))*(tonumber(C.buffs.size)+2*tonumber(C.buffs.spacing))
+        growth = C.buffs.buffgrowth
+        local multiplier = growth == "LEFT_TO_RIGHT" and 1 or -1
+        offsetX = multiplier * (buff.gid-1-rowcount*tonumber(C.buffs.buffrowsize))*(tonumber(C.buffs.size)+2*tonumber(C.buffs.spacing))
         offsetY = -(rowcount) * ((C.buffs.textinside == "1" and 0 or (fontsize*1.5))+tonumber(C.buffs.size)+2*tonumber(C.buffs.spacing))
+        anchor = growth == "LEFT_TO_RIGHT" and "TOPLEFT" or "TOPRIGHT"
       end
     else
       rowcount = floor((buff.gid-1) / tonumber(C.buffs.debuffrowsize))
       relFrame = pfUI.buff.debuffs
-      offsetX = -(buff.gid-1-rowcount*tonumber(C.buffs.debuffrowsize))*(tonumber(C.buffs.size)+2*tonumber(C.buffs.spacing))
+      growth = C.buffs.debuffgrowth
+      local multiplier = growth == "LEFT_TO_RIGHT" and 1 or -1
+      offsetX = multiplier * (buff.gid-1-rowcount*tonumber(C.buffs.debuffrowsize))*(tonumber(C.buffs.size)+2*tonumber(C.buffs.spacing))
       offsetY = -(rowcount) * ((C.buffs.textinside == "1" and 0 or (fontsize*1.5))+tonumber(C.buffs.size)+2*tonumber(C.buffs.spacing))
+      anchor = growth == "LEFT_TO_RIGHT" and "TOPLEFT" or "TOPRIGHT"
     end
 
     buff:SetWidth(tonumber(C.buffs.size))
     buff:SetHeight(tonumber(C.buffs.size))
     buff:ClearAllPoints()
-    buff:SetPoint("TOPRIGHT", relFrame, "TOPRIGHT",offsetX, offsetY)
+    buff:SetPoint(anchor, relFrame, anchor, offsetX, offsetY)
 
     buff.timer:SetFont(pfUI.font_default, fontsize, "OUTLINE")
     buff.stacks:SetFont(pfUI.font_default, fontsize+1, "OUTLINE")
