@@ -889,6 +889,10 @@ pfUI:RegisterModule("gui", "vanilla:tbc", function ()
         "HORIZONTAL:" .. T["Horizontal"],
         "VERTICAL:" .. T["Vertical"],
       },
+      ["buffgrowth"] = {
+        "RIGHT_TO_LEFT:" .. T["Right To Left"],
+        "LEFT_TO_RIGHT:" .. T["Left To Right"],
+      },
       ["uf_animationspeed"] = {
         "1:" .. T["Instant"],
         "2:" .. T["Very Fast"],
@@ -1938,6 +1942,9 @@ pfUI:RegisterModule("gui", "vanilla:tbc", function ()
       CreateConfig(U["buff"], T["Number Of Weapon Buffs Per Row"], C.buffs, "wepbuffrowsize")
       CreateConfig(U["buff"], T["Number Of Buffs Per Row"], C.buffs, "buffrowsize")
       CreateConfig(U["buff"], T["Number Of Debuffs Per Row"], C.buffs, "debuffrowsize")
+      CreateConfig(U["buff"], T["Buff Growth Direction"], C.buffs, "buffgrowth", "dropdown", pfUI.gui.dropdowns.buffgrowth)
+      CreateConfig(U["buff"], T["Debuff Growth Direction"], C.buffs, "debuffgrowth", "dropdown", pfUI.gui.dropdowns.buffgrowth)
+      CreateConfig(U["buff"], T["Weapon Buff Growth Direction"], C.buffs, "wepbuffgrowth", "dropdown", pfUI.gui.dropdowns.buffgrowth)
       CreateConfig(U["buff"], T["Show Duration Inside Buff"], C.buffs, "textinside", "checkbox")
       CreateConfig(U["buff"], T["Buff Font Size"], C.buffs, "fontsize")
     end)
