@@ -19,6 +19,7 @@ pfUI:RegisterModule("group", "vanilla:tbc", function ()
     local startid = C.unitframes.selfingroup == "1" and 0 or 1
     local spacing = C.unitframes.group.pspace
     local rawborder, default_border = GetBorderSize("unitframes")
+    local growth = C.unitframes.group.growth or "TOP_TO_BOTTOM"
 
     for i=0, 4 do
       local active = i >= 1 or startid == 0
@@ -26,7 +27,15 @@ pfUI:RegisterModule("group", "vanilla:tbc", function ()
       if active then
         pfUI.uf.group[i] = pfUI.uf.group[i] or pfUI.uf:CreateUnitFrame("Party", i, C.unitframes.group)
         pfUI.uf.group[i]:UpdateFrameSize()
-        pfUI.uf.group[i]:SetPoint("TOPLEFT", 5, -5 - ((i-startid)*75))
+
+        -- Calculate position based on growth direction
+        local anchor = growth == "TOP_TO_BOTTOM" and "TOPLEFT" or "BOTTOMLEFT"
+        local multiplier = growth == "TOP_TO_BOTTOM" and -1 or 1
+        local baseOffset = growth == "TOP_TO_BOTTOM" and -5 or 5
+        local yOffset = baseOffset + (multiplier * (i-startid) * 75)
+
+        pfUI.uf.group[i]:ClearAllPoints()
+        pfUI.uf.group[i]:SetPoint(anchor, 5, yOffset)
         pfUI.uf.group[i]:UpdateConfig()
         UpdateMovable(pfUI.uf.group[i])
       elseif pfUI.uf.group[i] then

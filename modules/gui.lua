@@ -893,6 +893,10 @@ pfUI:RegisterModule("gui", "vanilla:tbc", function ()
         "RIGHT_TO_LEFT:" .. T["Right To Left"],
         "LEFT_TO_RIGHT:" .. T["Left To Right"],
       },
+      ["groupgrowth"] = {
+        "TOP_TO_BOTTOM:" .. T["Top To Bottom"],
+        "BOTTOM_TO_TOP:" .. T["Bottom To Top"],
+      },
       ["uf_animationspeed"] = {
         "1:" .. T["Instant"],
         "2:" .. T["Very Fast"],
@@ -1640,6 +1644,7 @@ pfUI:RegisterModule("gui", "vanilla:tbc", function ()
       CreateConfig(nil, T["Always Show Self In Raid Frames"], C.unitframes, "selfinraid", "checkbox")
       CreateConfig(nil, T["Show Self In Group Frames"], C.unitframes, "selfingroup", "checkbox")
       CreateConfig(nil, T["Hide Group Frames While In Raid"], C.unitframes.group, "hide_in_raid", "checkbox")
+      CreateConfig(nil, T["Group Growth Direction"], C.unitframes.group, "growth", "dropdown", pfUI.gui.dropdowns.groupgrowth)
       CreateConfig(nil, T["Max Amount Of Raid Frames"], C.unitframes, "maxraid", "dropdown", pfUI.gui.dropdowns.maxraid)
 
       CreateConfig(U[c], T["Colors"], nil, nil, "header")
